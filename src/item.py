@@ -2,15 +2,14 @@ class Item:
     """
     Класс для представления товара в магазине.
     """
-    pay_rate = 1.0 # уровень цен (по умолчанию без скидки)
-    all = [] # список созданных экземпляров
+    pay_rate = 1.0  # уровень цен (по умолчанию без скидки)
+    all = []  # список созданных экземпляров
 
     def __init__(self, name, price, quantity):
         self.name = name
         self.price = price
         self.quantity = quantity
         Item.all.append(self)
-
 
     def calculate_total_price(self) -> float:
         """
@@ -26,3 +25,8 @@ class Item:
         """
         self.price *= self.pay_rate
 
+    def __repr__(self):
+        return f"Item('{self.name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        return self.name

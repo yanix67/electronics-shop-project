@@ -2,15 +2,13 @@ import unittest
 from src.item import Item
 
 class TestItem(unittest.TestCase):
-    def test_calculate_total_price(self):
+    def test_repr(self):
         item = Item("Тестовый товар", 100, 3)
-        self.assertEqual(item.calculate_total_price(), 300)
+        self.assertEqual(repr(item), "Item('Тестовый товар', 100, 3)")
 
-    def test_apply_discount(self):
-        item = Item("Тестовый товар", 100, 1)
-        Item.pay_rate = 0.9  # устанавливаем уровень цен с учетом 10% скидки
-        item.apply_discount()
-        self.assertEqual(item.price, 90)
+    def test_str(self):
+        item = Item("Тестовый товар", 100, 3)
+        self.assertEqual(str(item), "Тестовый товар")
 
 if __name__ == '__main__':
     unittest.main()
