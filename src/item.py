@@ -1,3 +1,6 @@
+import csv
+import os
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -6,11 +9,41 @@ class Item:
     all = []  # список созданных экземпляров
 
     def __init__(self, name, price, quantity):
-        self.name = name
+        self.__name = name
         self.price = price
         self.quantity = quantity
         Item.all.append(self)
 
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        if len(value) > 10:
+            self.__name = value[:10]
+        else:
+            self.__name = value
+
+    @staticmethod
+    def string_to_number(value):
+        return int(float(value))
+
+    @classmethod
+    def instantiate_from_csv(cls, data):
+        cls.all.clear()
+        filepath = os.path.abspath(__file__)
+        parent_directory = os.path.dirname(os.path.dirname(filepath))
+        full_path = os.path.join(parent_directory, data)
+        with open(full_path, "r", encoding="windows-1251") as file:
+            reader = csv.DictReader(file)
+            items = list(reader)
+        for item in items:
+            Item(
+                name=item['name'],
+                price=float(item['price']),
+                quantity=int(item['quantity']),
+            )
     def calculate_total_price(self) -> float:
         """
         Рассчитывает общую стоимость конкретного товара в магазине.
